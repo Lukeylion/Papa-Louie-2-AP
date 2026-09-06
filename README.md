@@ -17,5 +17,16 @@ Guide:
 9. Right click on papaGame.data and press add class
 10. Name it ApClient it needs to be exactly like that
 11. Then copy the code from the file in this repository named ApClient (Not in releases)
-12. 
+12. Click the new ApClient file you just made and press edit actionscript underneath the code window and paste the copied code
+13. Press save down the bottom and find a folder called package_4 in that theres a file named class_5 open it
+14. Now where it says <img width="352" height="38" alt="image" src="https://github.com/user-attachments/assets/70aef82b-a10f-4f62-bee5-44ec783c3eb8" /> under that { paste public var apClient:ApClient;
+15. Now scroll down past the final public var which is public var var_239:Boolean = false; right under that add
+      public function class_5()
+      {
+         this.apClient = new ApClient(this.var_106,this.var_112,this.var_113,this);
+         super();
+      }
+16. Scroll down to public function method_196() : void and under _loc1_.var_109.prepareLevelData(false); add this.apClient = new ApClient(this.var_106,this.var_112,this.var_113,this);
+17. Now scroll down to public function finishLevel() : void and under completedLevel = _loc1_.var_109.currentLevel; add _loc1_.apClient.sendCheck(completedLevel,0);
+18. Scroll down to public function method_132() : void and under _loc1_ = this; add _loc1_.apClient.sendDeath()
 
