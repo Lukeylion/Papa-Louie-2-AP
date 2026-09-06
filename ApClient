@@ -1,0 +1,139 @@
+package papaGame.data
+{
+   import flash.events.*;
+   import flash.net.XMLSocket;
+   import flash.system.Security;
+   
+   public class ApClient
+   {
+      
+      private var socket:XMLSocket;
+      
+      private var userData:Object;
+      
+      private var challengeMgr:Object;
+      
+      private var customerData:Object;
+      
+      private var gameObj:Object;
+      
+      public function ApClient(userDataRef:Object, challengeMgrRef:Object, customerDataRef:Object, gameObjRef:Object)
+      {
+         super();
+         userData = userDataRef;
+         challengeMgr = challengeMgrRef;
+         customerData = customerDataRef;
+         gameObj = gameObjRef;
+         Security.loadPolicyFile("xmlsocket://127.0.0.1:8082");
+         socket = new XMLSocket();
+         socket.addEventListener(Event.CONNECT,onConnect);
+         socket.addEventListener(DataEvent.DATA,onData);
+         socket.addEventListener(IOErrorEvent.IO_ERROR,onError);
+         socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR,onError);
+         socket.connect("127.0.0.1",8082);
+      }
+      
+      private function onConnect(e:Event) : void
+      {
+         trace("AP bridge connected");
+      }
+      
+      private function onError(e:Event) : void
+      {
+         trace("AP bridge error: " + e.toString());
+      }
+      
+      private function onData(e:DataEvent) : void
+      {
+         var data:String = e.data;
+         var msgType:String = extractString(data,"type");
+         if(msgType == "item")
+         {
+            var itemId:Number = extractNumber(data,"id");
+            var itemName:String = extractString(data,"name");
+            applyItem(itemId,itemName);
+         }
+         else if(msgType == "connected")
+         {
+            var slot:Number = extractNumber(data,"slot");
+            trace("AP: connected as slot " + slot);
+         }
+         else if(msgType == "kill")
+         {
+            trace("AP: DeathLink received, forcing death");
+            gameObj.method_132();
+         }
+      }
+      
+      public function sendCheck(world:Number, challenge:Number) : void
+      {
+         socket.send("{\"type\":\"check\",\"world\":" + world + ",\"challenge\":" + challenge + "}");
+      }
+      
+      public function sendDeath() : void
+      {
+         socket.send("{\"type\":\"death\"}");
+      }
+      
+      private function applyItem(id:Number, name:String) : void
+      {
+         trace("AP: received item " + name);
+         if(name == "Warp Key")
+         {
+            userData.earnWarpCoin();
+         }
+         else if(name.indexOf(" Unlocked") != -1)
+         {
+            var customerName:String = name.substring(0,name.indexOf(" Unlocked"));
+            var idx:Number = Number(customerData.getCustomerIndex(customerName));
+            if(!isNaN(idx) && idx >= 0)
+            {
+               userData.unlockCustomer(idx);
+            }
+            else
+            {
+               trace("AP: could not resolve customer index for \'" + customerName + "\' — name mismatch with getCustomerIndex()?");
+            }
+         }
+      }
+      
+      private function extractString(data:String, key:String) : String
+      {
+         var searchKey:String = "\"" + key + "\":\"";
+         var startIndex:int = data.indexOf(searchKey);
+         if(startIndex == -1)
+         {
+            return null;
+         }
+         startIndex += searchKey.length;
+         var endIndex:int = data.indexOf("\"",startIndex);
+         if(endIndex == -1)
+         {
+            return null;
+         }
+         return data.substring(startIndex,endIndex);
+      }
+      
+      private function extractNumber(data:String, key:String) : Number
+      {
+         var searchKey:String = "\"" + key + "\":";
+         var startIndex:int = data.indexOf(searchKey);
+         if(startIndex == -1)
+         {
+            return NaN;
+         }
+         startIndex += searchKey.length;
+         var endIndex:int = startIndex;
+         while(endIndex < data.length)
+         {
+            var ch:String = data.charAt(endIndex);
+            if(!(ch >= "0" && ch <= "9" || ch == "-" || ch == "."))
+            {
+               break;
+            }
+            endIndex++;
+         }
+         return Number(data.substring(startIndex,endIndex));
+      }
+   }
+}
