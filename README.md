@@ -26,7 +26,7 @@ Guide:
          this.apClient = new ApClient(this.var_106,this.var_112,this.var_113,this);
          super();
       }
-16. Scroll down to public function method_196() : void and under __loc1__.var_109.prepareLevelData(false); add this.apClient = new ApClient(this.var_106,this.var_112,this.var_113,this);
-17. Now scroll down to public function finishLevel() : void and under completedLevel = _loc1_.var_109.currentLevel; add _loc1_.apClient.sendCheck(completedLevel,0);
-18. Scroll down to public function method_132() : void and under _loc1_ = this; add _loc1_.apClient.sendDeath()
+16. Scroll down to public function method_196() : void and under \_loc1_.var_109.prepareLevelData(false); add this.apClient = new ApClient(this.var_106,this.var_112,this.var_113,this);
+17. Now scroll down to public function finishLevel() : void and under completedLevel = \_loc1_.var_109.currentLevel; add \_loc1_.apClient.sendCheck(completedLevel,0);
+18. Scroll down to public function method_132() : void and under \_loc1_ = this; add \_loc1_.apClient.sendDeath()
 
