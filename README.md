@@ -22,7 +22,7 @@ MOD SETUP START
 13. Click the new ApClient file you just made and press edit actionscript underneath the code window and paste the copied code
 14. Press save down the bottom and find a folder called package_4 in that theres a file named class_5 open it
 15. Now where it says <img width="352" height="38" alt="image" src="https://github.com/user-attachments/assets/70aef82b-a10f-4f62-bee5-44ec783c3eb8" /> under that { paste public var apClient:ApClient;
-16. Now scroll down past the final public var which is public var var_239:Boolean = false; right under that add
+16. Now scroll down past the final public var which is public var var_239:Boolean = false; right under that replace the punlic function class_5() with
       public function class_5()
       {
          this.apClient = new ApClient(this.var_106,this.var_112,this.var_113,this);
