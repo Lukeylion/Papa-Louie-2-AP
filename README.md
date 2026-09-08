@@ -38,7 +38,7 @@ MOD SETUP START
 25. Press save down the bottom and go to papaGame.data UserData
 26. Find public function completeChallenge(param1:Number, param2:Number) : void and above if(param1 !=9) add /* and under the third } under catch(err:Error) add */
 27. Now press save at the bottom and go to papaGame.managers Challenge Manager
-28. Under the } under \_loc5_.updateDisplay(); add _loc2_.gameObj.apClient.sendCheck(_loc7_.whichWorld,_loc7_.whichChallenge); to public function recordBurgerzilla(param1:Number = 1) : void, public function recordCoin(param1:Number = 1) : void, public function recordSpecialItem(param1:Number = 1) : void and public function recordCustomerCage(param1:Number) : void
+28. Under the } under \_loc5_.updateDisplay(); add \_loc2_.gameObj.apClient.sendCheck(\_loc7_.whichWorld,\_loc7_.whichChallenge); to public function recordBurgerzilla(param1:Number = 1) : void, public function recordCoin(param1:Number = 1) : void, public function recordSpecialItem(param1:Number = 1) : void and public function recordCustomerCage(param1:Number) : void
 29. Save that and if you havent already press the save at the top or save as if you want to save it as a different name
 30. Test if everything still works by opening the adobe flash player pressing open -> browse and find the .swf file
 MOD SETUP END
