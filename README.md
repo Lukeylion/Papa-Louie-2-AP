@@ -13,7 +13,7 @@ MOD SETUP START
 5. Now go to releases and download the file named PapaLouie2AP
 6. Go to https://kotcrab.github.io/xdelta-wasm/
 7. Where it say source File put the .swf you downloaded before
-8. Where it says patch file put the file you just downloaded from release
+8. Where it says patch file put the file you just downloaded from releases (PapaLouie2AP)
 MOD SETUP END
 
 AP SETUP START
